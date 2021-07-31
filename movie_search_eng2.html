@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie API </title>
+</head>
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    font-family: 'Open Sans', sans-serif;
+}
+  
+    #searchHere {
+	padding: 5em 0;
+	text-align: center;
+	background:black;
+	}
+  #searchHere>h2{
+    color: white;
+  }
+  #search {
+			border: none;
+			outline: none;
+			padding: 1em 7.2em;	
+			background:chartreuse;
+			color: white;
+			font-weight: 700;
+			margin-top: 3em;
+      border-radius: 2em;
+			-webkit-box-shadow: 0px 0px 76px 0px rgba(254, 249, 249, 0.47);
+			-moz-box-shadow: 0px 0px 76px 0px rgba(251, 249, 249, 0.47);
+		  box-shadow: 0 4px 8px 0 rgba(251, 249, 249, 0.47), 0 6px 20px 0 rgba(251, 249, 249, 0.47);
+		}
+    button:active,input:active {
+  transform: translateY(4px);
+}
+    #movie{
+      padding: 1em 7.2em;	
+    border-radius: 2em;
+			-webkit-box-shadow: 0px 0px 76px 0px rgba(254, 249, 249, 0.47);
+			-moz-box-shadow: 0px 0px 76px 0px rgba(251, 249, 249, 0.47);
+		  box-shadow: 0 4px 8px 0 rgba(251, 249, 249, 0.47), 0 6px 20px 0 rgba(251, 249, 249, 0.47);
+      margin-right: 20px;
+    }
+    #banner {
+	background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGkTeti6B7nPDw0sIRLBIelCqag_yrsjj5g&usqp=CAU');
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 100%;
+	padding: 6.5em 0;
+  display:flex;
+ 
+        }
+        #banner1{
+          background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGkTeti6B7nPDw0sIRLBIelCqag_yrsjj5g&usqp=CAU');
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 100%;
+	padding: 6.5em 0;
+  display:none;
+        }
+        .content {
+		float: left;
+		width: 500px;
+		margin-left: 100px;
+        }
+		.title {
+			display: inline;
+			font-size: 2em;
+			color: white;
+		}
+        .banner_content_wrapper {
+		/* width: 900px; */
+		max-width: 90%;
+		margin:auto;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+   
+	}
+    .info {
+			color: white;
+			font-size: .8em;
+			font-weight: 700;
+			margin-top: 3em;}
+            .description {
+			color: #bbbebf;
+			font-size: 1em;
+			line-height: 2;
+		}
+			span {
+				margin: 0 .5em;
+			}
+            .poster {
+     margin-left:100px;
+		width: 300px;
+		position: relative;
+		float: left;
+    justify-content: center;
+		align-items: center;
+            }
+
+            .featured_image {
+			width: 300px;
+			border-radius: .5em;
+      height:350px;
+			-webkit-box-shadow: 0px 0px 76px 0px rgba(254, 249, 249, 0.47);
+			-moz-box-shadow: 0px 0px 76px 0px rgba(251, 249, 249, 0.47);
+		  box-shadow: 0 4px 8px 0 rgba(251, 249, 249, 0.47), 0 6px 20px 0 rgba(251, 249, 249, 0.47);
+		}
+    .featured_image:hover{
+      opacity: 0.6;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+  transition-duration:1s;
+
+    }
+  
+    
+    #no{
+      color: red;
+    }
+
+  
+</style>
+<body>
+  <section id="searchHere">
+		
+			<h2>Get the best Movie in just one click.</h2>
+			<div class="s1">
+				<input type="text" placeholder="Search by movie name" id="movie">
+        <button id="search" onclick="displayMovies()"> search</button>
+			</div>
+		
+	</section>
+  <body>
+    <section id="banner">
+        <div class="banner_content_wrapper">
+          <div class="poster">
+          
+             <img src="https://i.gifer.com/C4NS.gif" class="featured_image">
+            
+
+          </div>
+          <div class="content">
+            <h2 class="title" id="no">No movie found</h2>
+            
+      
+            <p class="description">Make sure that you have entered correct movie name. </p>
+      
+            <p class="info">Ratings <span>|</span> Released date<span>|</span> Actors list<span>|</span> Languages</p>
+          </div>
+        </div>
+      </section>  
+      <section id="banner1"></section>
+ 
+</body>
+</html>
+<script>
+    
+    async function displayMovies(){
+      // e.preventDefault();
+        let movie=document.getElementById("movie").value;
+        
+        let key="1752f587&";
+
+        try{
+    let responce=await fetch(`https://www.omdbapi.com/?apikey=${key}&t=${movie}&maxResults=80`);
+   
+
+
+    let data=await responce.json();
+
+    if(data.imdbRating!=undefined){
+
+      banner=document.getElementById('banner');
+      banner.style.display='none';
+    
+   
+    banner1=document.getElementById('banner1'); 
+   banner1.innerHTML=null;
+
+    banner1.setAttribute('id','banner1');
+    banner1.style.display='flex';
+
+    var div=document.createElement('div');
+    div.setAttribute('class','banner_content_wrapper');
+
+    var poster=document.createElement('div');
+    poster.setAttribute('class','poster');
+
+    let img2=document.createElement('img');
+    img2.src=data.Poster;
+    img2.setAttribute('class','featured_image');
+    img2.setAttribute('id','featured_image');
+    poster.append(img2);
+
+
+    var content=document.createElement('div');
+    content.setAttribute('class','content');
+
+   
+    let name=document.createElement('h2');
+    name.innerHTML=data.Title;
+    name.setAttribute('class','title');
+   
+    let ratings=document.createElement('p');
+    ratings.innerHTML=data.Plot;
+    ratings.setAttribute('class','description');
+
+
+   let info= document.createElement('p');
+   info.setAttribute('class','info');
+   info.innerHTML=`${data.imdbRating}   |   ${data.Released}   |   ${data.Actors}   |   ${data.Language}`;
+
+
+    content.append(name,ratings,info);
+
+    banner1.append(poster,content);
+
+    console.log(data);  
+
+     
+    }
+    else{
+      banner1.style.display='none';
+      banner.style.display='flex';
+
+    }
+    
+
+}catch (err){
+    console.log(err);
+}
+
+}
+
+
+</script>
+
+
