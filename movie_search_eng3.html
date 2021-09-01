@@ -16,11 +16,15 @@
     vertical-align: baseline;
     font-family: 'Open Sans', sans-serif;
 }
+body{
+  background-color: black;
+}
   
     #searchHere {
 	padding: 5em 0;
 	text-align: center;
 	background:black;
+  margin: auto;
 	}
   #searchHere>h2{
     color: white;
@@ -28,7 +32,7 @@
   #search {
 			border: none;
 			outline: none;
-			padding: 1em 7.2em;	
+			padding: 1em;	
 			background:chartreuse;
 			color: white;
 			font-weight: 700;
@@ -37,17 +41,17 @@
 			-webkit-box-shadow: 0px 0px 76px 0px rgba(254, 249, 249, 0.47);
 			-moz-box-shadow: 0px 0px 76px 0px rgba(251, 249, 249, 0.47);
 		  box-shadow: 0 4px 8px 0 rgba(251, 249, 249, 0.47), 0 6px 20px 0 rgba(251, 249, 249, 0.47);
+      width:20rem;;
 		}
     button:active,input:active {
   transform: translateY(4px);
 }
     #movie{
-      padding: 1em 7.2em;	
+      padding: 1em;	
     border-radius: 2em;
 			-webkit-box-shadow: 0px 0px 76px 0px rgba(254, 249, 249, 0.47);
 			-moz-box-shadow: 0px 0px 76px 0px rgba(251, 249, 249, 0.47);
-		  box-shadow: 0 4px 8px 0 rgba(251, 249, 249, 0.47), 0 6px 20px 0 rgba(251, 249, 249, 0.47);
-      margin-right: 20px;
+		  box-shadow: 0 4px 8px 0 rgba(251, 249, 249, 0.47), 0 6px; width:18rem;;
     }
     #banner {
 	background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxGkTeti6B7nPDw0sIRLBIelCqag_yrsjj5g&usqp=CAU');
@@ -67,22 +71,24 @@
   display:none;
         }
         .content {
-		float: left;
-		width: 500px;
-		margin-left: 100px;
+		margin-left:50px;
+    text-align:center;
         }
 		.title {
 			display: inline;
 			font-size: 2em;
 			color: white;
-		}
-        .banner_content_wrapper {
+		}.poster{
+      position: relative;
+    }
+        #banner,#banner1 {
 		/* width: 900px; */
-		max-width: 90%;
+		width: 100%;
 		margin:auto;
 		display: flex;
+    flex-direction: row;
 		justify-content: center;
-		align-items: center;
+    justify-items: center;
    
 	}
     .info {
@@ -94,18 +100,11 @@
 			color: #bbbebf;
 			font-size: 1em;
 			line-height: 2;
+      max-width:450px;
 		}
 			span {
 				margin: 0 .5em;
 			}
-            .poster {
-     margin-left:100px;
-		width: 300px;
-		position: relative;
-		float: left;
-    justify-content: center;
-		align-items: center;
-            }
 
             .featured_image {
 			width: 300px;
@@ -124,18 +123,55 @@
     }
   
     .rec{
-      height: 60px;
-      width: 60px;
-      position:absolute;
-      right: 2px;
-      top:2px;
+      height: 4rem;;
+      width: 4rem;
+      position:relative;
+      top:0;
+      left: 44%;
       border-radius:50%;
-     
+      display: block;
+      margin-bottom:10px;
     }
     #no{
       color: red;
     }
 
+    @media only screen and (max-width: 768px) {
+      #banner,#banner1 {
+		width: 100%;
+    margin: auto;
+		flex-direction: column;
+    padding:10px;
+      }
+      .content{
+       margin-top: 30px;
+       margin: auto;
+      }
+      .featured_image {
+			width: 200px;
+      height:250px;
+
+    }
+    .poster,.content{
+      margin:auto;
+      margin-top: 30px;
+  
+    }
+    #search,#movie{
+      margin-top:1.5rem;
+    }
+    #searchHere {
+	padding: 1.5em 1;
+  margin: auto;
+  }
+  *{
+    padding:10px;
+   
+  }
+  .rec{
+    left:38%;
+  }
+}
   
 </style>
 <body>
@@ -150,7 +186,7 @@
 	</section>
   <body>
     <section id="banner">
-        <div class="banner_content_wrapper">
+      
           <div class="poster">
           
              <img src="https://i.gifer.com/C4NS.gif" class="featured_image">
@@ -165,7 +201,7 @@
       
             <p class="info">Ratings <span>|</span> Released date<span>|</span> Actors list<span>|</span> Languages</p>
           </div>
-        </div>
+    
       </section>  
       <section id="banner1"></section>
  
@@ -210,16 +246,18 @@
     img2.setAttribute('id','featured_image');
     poster.append(img2);
 
-    if(data.imdbRating>=8.5){
-      var rec=document.createElement('img');
-    rec.src='https://t4.ftcdn.net/jpg/03/22/32/63/360_F_322326379_yTobVltXhFFydBHeV8XRhfaB3Zh3N9GC.jpg';
-    rec.setAttribute('class','rec');
-    poster.append(rec);
-    }
-
     var content=document.createElement('div');
     content.setAttribute('class','content');
 
+
+    if(data.imdbRating>=8.5){
+      var rec=document.createElement('img');
+    rec.src='https://png.pngtree.com/png-clipart/20191027/ourlarge/pngtree-star-rate-icon-png-image_1842644.jpg';
+    rec.setAttribute('class','rec');
+    content.append(rec);
+    }
+
+    
    
     let name=document.createElement('h2');
     name.innerHTML=data.Title;
